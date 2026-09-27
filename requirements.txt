@@ -8,3 +8,7 @@ catboost
 tensorflow
 scikeras
 shap
+
+fastapi
+pydantic
+uvicorn

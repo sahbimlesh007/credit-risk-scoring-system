@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Risk Analyzer - Loan Assessment System</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <!-- Background Elements -->
+      <div class="background-elements">
+        <div class="gradient-orb orb-1"></div>
+        <div class="gradient-orb orb-2"></div>
+        <div class="gradient-orb orb-3"></div>
+      </div>
+
+      <!-- Header -->
+      <header class="header">
+        <div class="logo-section">
+          <div class="logo-icon">◈</div>
+          <h1>Risk Analyzer</h1>
+          <p>Loan Assessment System</p>
+        </div>
+        <div class="status-indicator">
+          <span class="status-dot"></span>
+          <span class="status-text">System Online</span>
+        </div>
+      </header>
+
+      <!-- Main Content -->
+      <main class="main-content">
+        <!-- Form Section -->
+        <section class="form-section">
+          <div class="section-header">
+            <h2>Loan Application Analysis</h2>
+            <p>Enter applicant details for risk prediction</p>
+          </div>
+
+          <form id="loanForm" class="form-grid">
+            <!-- Personal Information -->
+            <div class="form-group">
+              <label for="person_age">Age</label>
+              <input
+                type="number"
+                id="person_age"
+                name="person_age"
+                min="18"
+                max="120"
+                required
+              />
+              <span class="input-hint">Years</span>
+            </div>
+
+            <div class="form-group">
+              <label for="person_income">Annual Income</label>
+              <input
+                type="number"
+                id="person_income"
+                name="person_income"
+                min="0"
+                step="1000"
+                required
+              />
+              <span class="input-hint">USD</span>
+            </div>
+
+            <div class="form-group">
+              <label for="person_home_ownership">Home Ownership</label>
+              <select
+                id="person_home_ownership"
+                name="person_home_ownership"
+                required
+              >
+                <option value="">Select ownership type</option>
+                <option value="RENT">Rent</option>
+                <option value="OWN">Own</option>
+                <option value="MORTGAGE">Mortgage</option>
+                <option value="OTHER">Other</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="person_emp_length">Employment Length</label>
+              <input
+                type="number"
+                id="person_emp_length"
+                name="person_emp_length"
+                min="0"
+                step="0.1"
+                required
+              />
+              <span class="input-hint">Years</span>
+            </div>
+
+            <!-- Loan Information -->
+            <div class="form-group">
+              <label for="loan_intent">Loan Intent</label>
+              <select id="loan_intent" name="loan_intent" required>
+                <option value="">Select loan purpose</option>
+                <option value="PERSONAL">Personal</option>
+                <option value="EDUCATION">Education</option>
+                <option value="MEDICAL">Medical</option>
+                <option value="VENTURE">Venture</option>
+                <option value="HOMEIMPROVEMENT">Home Improvement</option>
+                <option value="DEBTCONSOLIDATION">Debt Consolidation</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="loan_grade">Loan Grade</label>
+              <select id="loan_grade" name="loan_grade" required>
+                <option value="">Select grade</option>
+                <option value="A">Grade A</option>
+                <option value="B">Grade B</option>
+                <option value="C">Grade C</option>
+                <option value="D">Grade D</option>
+                <option value="E">Grade E</option>
+                <option value="F">Grade F</option>
+                <option value="G">Grade G</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="loan_amnt">Loan Amount</label>
+              <input
+                type="number"
+                id="loan_amnt"
+                name="loan_amnt"
+                min="0"
+                step="100"
+                required
+              />
+              <span class="input-hint">USD</span>
+            </div>
+
+            <div class="form-group">
+              <label for="loan_int_rate">Interest Rate</label>
+              <input
+                type="number"
+                id="loan_int_rate"
+                name="loan_int_rate"
+                min="0"
+                step="0.01"
+                required
+              />
+              <span class="input-hint">%</span>
+            </div>
+
+            <div class="form-group">
+              <label for="loan_percent_income">Loan to Income Ratio</label>
+              <input
+                type="number"
+                id="loan_percent_income"
+                name="loan_percent_income"
+                min="0"
+                step="0.01"
+                required
+              />
+              <span class="input-hint">Ratio</span>
+            </div>
+
+            <!-- Credit History -->
+            <div class="form-group">
+              <label for="cb_person_default_on_file">Previous Default</label>
+              <select
+                id="cb_person_default_on_file"
+                name="cb_person_default_on_file"
+                required
+              >
+                <option value="">Select option</option>
+                <option value="N">No</option>
+                <option value="Y">Yes</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="cb_person_cred_hist_length"
+                >Credit History Length</label
+              >
+              <input
+                type="number"
+                id="cb_person_cred_hist_length"
+                name="cb_person_cred_hist_length"
+                min="0"
+                required
+              />
+              <span class="input-hint">Years</span>
+            </div>
+
+            <button type="submit" class="btn-analyze">
+              <span class="btn-text">Analyze Risk</span>
+              <span class="btn-icon">→</span>
+            </button>
+          </form>
+        </section>
+
+        <!-- Results Section -->
+        <section
+          class="results-section"
+          id="resultsSection"
+          style="display: none"
+        >
+          <div class="section-header">
+            <h2>Risk Assessment Results</h2>
+            <p>Real-time analysis powered by CatBoost ML model</p>
+          </div>
+
+          <div class="results-container">
+            <!-- Main Result Card -->
+            <div class="result-card main-result" id="mainResult">
+              <div class="result-content">
+                <div class="risk-badge" id="riskBadge"></div>
+                <div class="result-text">
+                  <h3>Overall Risk Assessment</h3>
+                  <p id="riskMessage"></p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Metrics Grid -->
+            <div class="metrics-grid">
+              <div class="metric-card">
+                <div class="metric-label">Default Probability</div>
+                <div class="metric-value" id="probabilityValue">--</div>
+                <div class="metric-bar">
+                  <div class="metric-fill" id="probabilityBar"></div>
+                </div>
+              </div>
+
+              <div class="metric-card">
+                <div class="metric-label">Decision Threshold</div>
+                <div class="metric-value" id="thresholdValue">--</div>
+                <div class="metric-indicator" id="thresholdIndicator"></div>
+              </div>
+
+              <div class="metric-card">
+                <div class="metric-label">Risk Category</div>
+                <div class="metric-value" id="categoryValue">--</div>
+                <div class="metric-badge" id="categoryBadge"></div>
+              </div>
+
+              <div class="metric-card">
+                <div class="metric-label">Confidence Score</div>
+                <div class="metric-value" id="confidenceValue">--</div>
+                <div class="metric-bar">
+                  <div class="metric-fill" id="confidenceBar"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="action-buttons">
+            <button class="btn-secondary" onclick="resetForm()">
+              New Analysis
+            </button>
+            <button class="btn-secondary" onclick="exportResults()">
+              Export Results
+            </button>
+          </div>
+        </section>
+
+        <!-- Loading State -->
+        <div class="loading-spinner" id="loadingSpinner" style="display: none">
+          <div class="spinner"></div>
+          <p>Analyzing application...</p>
+        </div>
+
+        <!-- Error State -->
+        <div
+          class="error-message"
+          id="errorMessage"
+          style="display: none"
+        ></div>
+      </main>
+
+      <!-- Footer -->
+      <footer class="footer">
+        <p>
+          Risk Analyzer © 2026 | Machine Learning Risk Assessment By Bimlesh
+          Kumar Sah
+        </p>
+      </footer>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
