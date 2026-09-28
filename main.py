@@ -19,7 +19,7 @@ async def lifespan(app: FastAPI):
     # Load the CatBoost model
     BASE_DIR = Path(__file__).resolve().parent
 
-    model["Catmodel"] = joblib.load(BASE_DIR / "CatBoost.pkl")
+    model["Catmodel"] = joblib.load(BASE_DIR / "CatBOost.pkl")
     model["catThresold"] = joblib.load(BASE_DIR / "catThresold.pkl")
 
     # Get feature names from the model
