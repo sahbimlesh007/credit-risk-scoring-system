@@ -8,18 +8,18 @@ A binary classification project that estimates the probability that a loan appli
 
 ## Project contents
 
-| Path | Purpose |
-| --- | --- |
-| `trials.ipynb` | Exploratory analysis, data cleaning, model comparison, tuning, threshold selection, calibration, SHAP explanations, and artifact export. |
-| `dataset/credit_dataset.csv` | Applicant and loan records with `loan_status` as the binary target. |
-| `CatBOost.pkl` | Serialized calibrated CatBoost pipeline used by the API (the filename's capitalization is intentional). |
-| `catThresold.pkl` | Serialized probability threshold used by the API (the filename spelling is intentional). |
-| `main.py` | FastAPI application, input schema, preprocessing, inference, and static-file hosting. |
-| `static/` | Browser interface: `index.html`, `style.css`, and `script.js`. |
-| `requirements.txt` | Python libraries for analysis, machine learning, and serving. |
-| `runtime.txt` | Python runtime declaration (`Python 3.12.x`). |
-| `render.yaml` | Render web-service build and start configuration. |
-| `.env.example` | Example model path settings; the current application loads artifacts by fixed filenames next to `main.py`. |
+| Path                         | Purpose                                                                                                                                  |
+| ---------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| `trials.ipynb`               | Exploratory analysis, data cleaning, model comparison, tuning, threshold selection, calibration, SHAP explanations, and artifact export. |
+| `dataset/credit_dataset.csv` | Applicant and loan records with `loan_status` as the binary target.                                                                      |
+| `CatBOost.pkl`               | Serialized calibrated CatBoost pipeline used by the API (the filename's capitalization is intentional).                                  |
+| `catThresold.pkl`            | Serialized probability threshold used by the API (the filename spelling is intentional).                                                 |
+| `main.py`                    | FastAPI application, input schema, preprocessing, inference, and static-file hosting.                                                    |
+| `static/`                    | Browser interface: `index.html`, `style.css`, and `script.js`.                                                                           |
+| `requirements.txt`           | Python libraries for analysis, machine learning, and serving.                                                                            |
+| `runtime.txt`                | Python runtime declaration (`Python 3.12.x`).                                                                                            |
+| `render.yaml`                | Render web-service build and start configuration.                                                                                        |
+| `.env.example`               | Example model path settings; the current application loads artifacts by fixed filenames next to `main.py`.                               |
 
 ## Project structure
 
@@ -48,19 +48,19 @@ Credit Risk Scoring System/
 
 The notebook's initial dataset inspection reports 32,581 records and 12 columns. The target is `loan_status` (`0` or `1`). The 11 input features used by the model/API are:
 
-| Feature | Meaning / expected type |
-| --- | --- |
-| `person_age` | Applicant age in years (integer). |
-| `person_income` | Annual income (numeric). |
-| `person_home_ownership` | Home ownership category (string). |
-| `person_emp_length` | Employment length in years (numeric). |
-| `loan_intent` | Loan purpose category (string). |
-| `loan_grade` | Loan grade (string). |
-| `loan_amnt` | Loan amount (numeric). |
-| `loan_int_rate` | Interest rate (numeric). |
-| `loan_percent_income` | Loan amount as a share of income (numeric). |
-| `cb_person_default_on_file` | Prior default-on-file indicator (string, such as `Y`/`N`). |
-| `cb_person_cred_hist_length` | Credit history length in years (integer). |
+| Feature                      | Meaning / expected type                                    |
+| ---------------------------- | ---------------------------------------------------------- |
+| `person_age`                 | Applicant age in years (integer).                          |
+| `person_income`              | Annual income (numeric).                                   |
+| `person_home_ownership`      | Home ownership category (string).                          |
+| `person_emp_length`          | Employment length in years (numeric).                      |
+| `loan_intent`                | Loan purpose category (string).                            |
+| `loan_grade`                 | Loan grade (string).                                       |
+| `loan_amnt`                  | Loan amount (numeric).                                     |
+| `loan_int_rate`              | Interest rate (numeric).                                   |
+| `loan_percent_income`        | Loan amount as a share of income (numeric).                |
+| `cb_person_default_on_file`  | Prior default-on-file indicator (string, such as `Y`/`N`). |
+| `cb_person_cred_hist_length` | Credit history length in years (integer).                  |
 
 The initial notebook inspection showed missing values in `person_emp_length` (895 records) and `loan_int_rate` (3,116 records). Numeric and categorical imputers are included in the modeling pipelines so missing feature values can be handled during fitting. The dataset's categorical fields are `person_home_ownership`, `loan_intent`, `loan_grade`, and `cb_person_default_on_file`.
 
@@ -92,13 +92,13 @@ The steps below reflect the work recorded in `trials.ipynb`.
 
 These are the mean scores printed for the initial five-fold model comparison, before tuning. They are cross-validation scores on the training partition, not final test-set scores.
 
-| Model | ROC AUC | Accuracy | Precision | Recall | F1 |
-| --- | ---: | ---: | ---: | ---: | ---: |
-| Logistic Regression | 0.871 | 0.812 | 0.545 | 0.778 | 0.641 |
-| Random Forest | 0.929 | 0.927 | 0.903 | 0.742 | 0.815 |
-| XGBoost | 0.939 | 0.909 | 0.791 | 0.786 | 0.788 |
-| CatBoost | 0.945 | 0.921 | 0.837 | 0.787 | 0.811 |
-| ANN | Not available (recorded ROC AUC was `nan`) | 0.928 | 0.959 | 0.694 | 0.805 |
+| Model               |                                    ROC AUC | Accuracy | Precision | Recall |    F1 |
+| ------------------- | -----------------------------------------: | -------: | --------: | -----: | ----: |
+| Logistic Regression |                                      0.871 |    0.812 |     0.545 |  0.778 | 0.641 |
+| Random Forest       |                                      0.929 |    0.927 |     0.903 |  0.742 | 0.815 |
+| XGBoost             |                                      0.939 |    0.909 |     0.791 |  0.786 | 0.788 |
+| CatBoost            |                                      0.945 |    0.921 |     0.837 |  0.787 | 0.811 |
+| ANN                 | Not available (recorded ROC AUC was `nan`) |    0.928 |     0.959 |  0.694 | 0.805 |
 
 Scores can vary when the notebook is rerun if library versions, runtime, or random behavior differ. The XGBoost comparison cell spells the estimator argument `n_estimator` (singular), while its later tuning uses `n_estimators`; consult the notebook output/environment if reproducing that particular run.
 
