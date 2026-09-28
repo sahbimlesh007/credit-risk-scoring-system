@@ -38,6 +38,7 @@ Credit Risk Scoring System/
 ├── requirements.txt             # Python dependencies
 ├── runtime.txt                  # Python runtime version for deployment
 ├── render.yaml                  # Render service configuration
+├── Project Report.pdf           # Project Report
 ├── .env.example                 # Example environment settings
 ├── .gitignore                   # Files excluded from version control
 ├── LICENSE                      # Project license
