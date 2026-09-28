@@ -13,4 +13,5 @@ fastapi
 pydantic
 uvicorn
 
+pathlib 
 python-dotenv

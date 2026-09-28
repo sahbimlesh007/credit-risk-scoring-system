@@ -5,6 +5,7 @@ import joblib
 from contextlib import asynccontextmanager
 from fastapi.staticfiles import StaticFiles
 import numpy as np
+from pathlib import Path
 
 model = {}
 encoders = {}
@@ -16,8 +17,10 @@ async def lifespan(app: FastAPI):
     global feature_names
 
     # Load the CatBoost model
-    model["Catmodel"] = joblib.load("CatBoost.pkl")
-    model["catThresold"] = joblib.load("catThresold.pkl")
+    BASE_DIR = Path(__file__).resolve().parent
+
+    model["Catmodel"] = joblib.load(BASE_DIR / "CatBoost.pkl")
+    model["catThresold"] = joblib.load(BASE_DIR / "catThresold.pkl")
 
     # Get feature names from the model
     try:
